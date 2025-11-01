@@ -29,7 +29,13 @@ namespace UserManager.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ImagesUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

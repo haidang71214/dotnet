@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using UserManager.Data; 
-
+using UserManager.Data;
+using UserManager.IRepository;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using AutoMapper;
 namespace UserManager
+
 {
     public class Program
     {
@@ -10,32 +13,39 @@ namespace UserManager
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // ✅ Thêm connection string từ appsettings.json
+            // Kết nối MySQL (Pomelo)
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-            // ✅ Đăng ký DbContext với MySQL (Pomelo)
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-            // ✅ Thêm controller
+            // Thêm controller + DI
             builder.Services.AddControllers();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-            // ✅ Thêm Swagger (dành cho test API)
+            // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            // AutoMapper
+            builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingConfig>());
 
             var app = builder.Build();
 
-            // ✅ Cấu hình pipeline
-            if (app.Environment.IsDevelopment())
+            // BẬT SWAGGER LUÔN (không chỉ dev)
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "UserManager API v1");
+                c.RoutePrefix = "swagger"; // → truy cập: http://localhost:5064/swagger
+            });
 
-            }
+            // XÓA DÒNG NÀY (gây lỗi HTTPS)
+            // app.UseHttpsRedirection();
 
-            app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
+
+            // THÊM DÒNG NÀY: Tạo route mặc định để test
+            app.MapGet("/", () => Results.Json(new { message = "API UserManager đang chạy! Truy cập /swagger để test." }));
 
             app.Run();
         }

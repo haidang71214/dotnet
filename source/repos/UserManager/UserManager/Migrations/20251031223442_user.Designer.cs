@@ -11,8 +11,8 @@ using UserManager.Data;
 namespace UserManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251030221810_users")]
-    partial class users
+    [Migration("20251031223442_user")]
+    partial class user
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,13 @@ namespace UserManager.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ImagesUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
