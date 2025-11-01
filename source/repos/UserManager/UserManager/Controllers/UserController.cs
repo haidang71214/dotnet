@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Data;
 using UserManager.Entity;
-using UserManager.IRepository;
 using UserManager.Models.Dto;
+using UserManager.repository.IRepository;
 
 namespace UserManager.Controllers
 {

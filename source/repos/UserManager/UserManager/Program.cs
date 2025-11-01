@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using UserManager.Data;
-using UserManager.IRepository;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using AutoMapper;
+using UserManager.repository.IRepository;
+using UserManager.repository;
 namespace UserManager
 
 {
