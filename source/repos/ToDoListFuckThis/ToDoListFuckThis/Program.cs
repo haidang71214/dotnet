@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-
-using Swashbuckle.AspNetCore.SwaggerUI;
+﻿using System.Text.Json.Serialization;
 using AutoMapper;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using ToDoListFuckThis.Data;
-using UserManager.repository.IRepository;
+using ToDoListFuckThis.Mapping;
 using UserManager.repository;
-using ToDoListFuckThis;
+using UserManager.repository.IRepository;
 namespace UserManager
 
 {
@@ -29,8 +29,13 @@ namespace UserManager
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // AutoMapper
-            builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingConfig>());
-
+            builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserMapping>());
+            // này là để map với thằng enums
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             var app = builder.Build();
 
             // BẬT SWAGGER LUÔN (không chỉ dev)

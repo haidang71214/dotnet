@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace ToDoListFuckThis.Models
+namespace ToDoListFuckThis.Models.CustomResponse
 {
     public class ApiResponse
     {

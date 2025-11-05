@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ToDoListFuckThis.Models
+namespace ToDoListFuckThis.Models.CustomResponse
 {
     // này đơn giản thôi, kế thừa từ api response xong gọi lại
     public class ApiListResponse<T> : ApiResponse
