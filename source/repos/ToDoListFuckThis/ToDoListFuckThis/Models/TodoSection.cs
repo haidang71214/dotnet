@@ -7,8 +7,8 @@ namespace ToDoListFuckThis.Models
     public class TodoSection
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string Id { get; set; }
+
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         // để phần section nắm todolist, phân ra từng deadline
         public List<Todolists> Todolists { get; set; } = new List<Todolists>();

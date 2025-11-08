@@ -14,5 +14,6 @@ namespace ToDoListFuckThis.Models.Dto.ToDoListDto
         public PriorityEnums Priority { get; set; } = PriorityEnums.CLEAR; // mặc định độ quan trong của todo là clear
         // comment
         public string Comment { get; set; }
+        public string userId { get; set; }
     }
 }

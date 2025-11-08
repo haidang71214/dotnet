@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using ToDoListFuckThis.Models;
 using ToDoListFuckThis.Models.Dto.LoginDto;
@@ -12,6 +13,6 @@ namespace ToDoListFuckThis.Repository.IRepository
         bool IsUniqueUser(string email);
         // ở đây, logic register rất dễ nhưng, cần phải chắc chắn đó đã được register
         Task<Users> RegisterAsync(RegisterRequestDto Register);
-        Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);
+        Task<LoginResponseDto> LoginAsync(LoginRequestDto loginRequestDto);
     }
 }

@@ -7,8 +7,8 @@ namespace ToDoListFuckThis.Models
     public class Users
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public string? Name { get; set; }
         public string? Password { get; set; }
@@ -17,5 +17,6 @@ namespace ToDoListFuckThis.Models
 
         public string? Email { get; set; }
         public RoleEnums Role { get; set; } = RoleEnums.CLIENT; //mặc định là client
+        public ICollection<Projects> Projects { get; set; } = new List<Projects>();
     }
 }

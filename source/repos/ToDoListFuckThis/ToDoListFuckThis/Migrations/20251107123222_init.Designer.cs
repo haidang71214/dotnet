@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToDoListFuckThis.Data;
@@ -11,9 +12,11 @@ using ToDoListFuckThis.Data;
 namespace ToDoListFuckThis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251107123222_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,14 +118,9 @@ namespace ToDoListFuckThis.Migrations
                     b.Property<Guid?>("TodoSectionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TodoSectionId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("todolists");
                 });
@@ -188,14 +186,6 @@ namespace ToDoListFuckThis.Migrations
                     b.HasOne("ToDoListFuckThis.Models.TodoSection", null)
                         .WithMany("Todolists")
                         .HasForeignKey("TodoSectionId");
-
-                    b.HasOne("ToDoListFuckThis.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ToDoListFuckThis.Models.Users", b =>

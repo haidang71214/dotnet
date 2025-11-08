@@ -8,8 +8,9 @@ namespace ToDoListFuckThis.Models
     public class Todolists
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         // tên, trạng thái đã làm rồi làm chưa đang làm chưa làm; comment;
         [Required]
         public string Name { get; set; }
@@ -18,6 +19,8 @@ namespace ToDoListFuckThis.Models
         public PriorityEnums Priority { get; set; } = PriorityEnums.CLEAR; // mặc định độ quan trong của todo là clear
         // comment
         public string Comment { get; set; }
+
+        public Users User { get; set; } // manny to one for user, 
 
     }
 }

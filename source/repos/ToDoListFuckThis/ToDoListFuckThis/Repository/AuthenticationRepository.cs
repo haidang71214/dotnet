@@ -1,50 +1,92 @@
-﻿using System.Threading.Tasks;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Crypto.Generators;
+using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using ToDoListFuckThis.Data;
 using ToDoListFuckThis.Models;
-using BCrypt.Net;
 using ToDoListFuckThis.Models.Dto.LoginDto;
 using ToDoListFuckThis.Models.Dto.RegisterDto;
 using ToDoListFuckThis.Repository.IRepository;
+using UserManager.Models.Dto;
 
 namespace ToDoListFuckThis.Repository
 {
     public class AuthenticationRepository : IAuthentication
     {
-        public readonly ApplicationDbContext _db;
-        public readonly IMapper _mapper;
-        public AuthenticationRepository(ApplicationDbContext db,IMapper mapper)
+        private readonly ApplicationDbContext _db;
+        private readonly IMapper _mapper;
+        private readonly string _secretKey;
+
+        public AuthenticationRepository(ApplicationDbContext db, IMapper mapper, IConfiguration configuration)
         {
             _db = db;
             _mapper = mapper;
+            _secretKey = configuration["ApiSettings:Secret"]
+                         ?? throw new InvalidOperationException("Missing ApiSettings:Secret in configuration");
         }
 
         public bool IsUniqueUser(string email)
         {
             var user = _db.user.FirstOrDefault(u => u.Email == email);
-            if (user == null) {
-                return false;
+            return user == null; // true = chưa có → unique
+        }
+
+        public async Task<LoginResponseDto?> LoginAsync(LoginRequestDto loginRequestDto)
+        {
+            var user = await _db.user.FirstOrDefaultAsync(u => u.Email == loginRequestDto.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(loginRequestDto.Password, user.Password))
+            {
+                return null;
             }
-            return false;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_secretKey); // SỬA: UTF8, KHÔNG ASCII
+
+            var roleString = user.Role.ToString() ?? "CLIENT"; // SỬA: an toàn với null
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, roleString)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                Issuer = "YourApp",     // PHẢI KHỚP Program.cs
+                Audience = "YourApp",   // PHẢI KHỚP Program.cs
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return new LoginResponseDto
+            {
+                Token = tokenString,
+                User = _mapper.Map<UserDto>(user)
+            };
         }
 
-        public Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
+        public async Task<Users?> RegisterAsync(RegisterRequestDto register)
         {
-            throw new NotImplementedException();
-        }
+            if (!IsUniqueUser(register.Email))
+                return null;
 
-        // truyền từ register dto vào
-        public async Task<Users> RegisterAsync(RegisterRequestDto register)
-        {
-            var userentity = _mapper.Map<Users>(register);
+            var userEntity = _mapper.Map<Users>(register);
+            userEntity.Password = BCrypt.Net.BCrypt.HashPassword(register.Password);
 
-            userentity.Password = BCrypt.Net.BCrypt.HashPassword(userentity.Password);
+            await _db.user.AddAsync(userEntity);
+            await _db.SaveChangesAsync();
 
-            await _db.AddAsync(userentity);
-            return userentity;
+            userEntity.Password = null; // không trả mật khẩu
+            return userEntity;
         }
     }
 }

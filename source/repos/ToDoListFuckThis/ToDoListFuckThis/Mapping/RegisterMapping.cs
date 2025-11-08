@@ -10,7 +10,7 @@ namespace ToDoListFuckThis.Mapping
     {
         public RegisterMapping()
         {
-            CreateMap<RegisterRequest, Users>().ReverseMap();
+            CreateMap<RegisterRequestDto, Users>().ReverseMap();
             CreateMap<Users, RegisterResponseDto>().ReverseMap();   
         }
     }
