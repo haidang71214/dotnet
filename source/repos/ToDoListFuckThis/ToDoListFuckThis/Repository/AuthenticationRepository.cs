@@ -44,9 +44,9 @@ namespace ToDoListFuckThis.Repository
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_secretKey); // SỬA: UTF8, KHÔNG ASCII
+            var key = Encoding.UTF8.GetBytes(_secretKey); 
 
-            var roleString = user.Role.ToString() ?? "CLIENT"; // SỬA: an toàn với null
+            var roleString = user.Role.ToString() ?? "CLIENT"; 
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -76,8 +76,7 @@ namespace ToDoListFuckThis.Repository
 
         public async Task<Users?> RegisterAsync(RegisterRequestDto register)
         {
-            if (!IsUniqueUser(register.Email))
-                return null;
+            
 
             var userEntity = _mapper.Map<Users>(register);
             userEntity.Password = BCrypt.Net.BCrypt.HashPassword(register.Password);

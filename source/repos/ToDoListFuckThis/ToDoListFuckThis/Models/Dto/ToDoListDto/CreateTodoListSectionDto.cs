@@ -4,9 +4,8 @@ using ToDoListFuckThis.Enums;
 
 namespace ToDoListFuckThis.Models.Dto.ToDoListDto
 {
-    public class TodolistResponseDto
+    public class CreateTodoListSectionDto
     {
-        public Guid Id { get; set; }
         public string? Name { get; set; }
         public TaskStatusEnum? TaskStatus { get; set; } = TaskStatusEnum.PROGRESS; // trạng thái mặc định là từ từ
         // độ ưu tiên của task,mặc định là không ưu tiên
@@ -15,6 +14,6 @@ namespace ToDoListFuckThis.Models.Dto.ToDoListDto
         public string? Comment { get; set; }
         public DateTime timeStart { get; set; }
         public DateTime timeEnd { get; set; }
-        public Users User { get; set; }
+
     }
 }

@@ -19,7 +19,10 @@ namespace ToDoListFuckThis.Models
         public PriorityEnums Priority { get; set; } = PriorityEnums.CLEAR; // mặc định độ quan trong của todo là clear
         // comment
         public string Comment { get; set; }
-
+        // deadline cho từng todo
+        public Guid? TodoSectionId { get; set; }
+        public DateTime timeStart { get; set; }
+        public DateTime timeEnd { get; set; }
         public Users User { get; set; } // manny to one for user, 
 
     }

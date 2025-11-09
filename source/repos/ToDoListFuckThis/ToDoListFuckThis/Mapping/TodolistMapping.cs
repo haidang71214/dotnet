@@ -2,7 +2,6 @@
 using AutoMapper;
 using ToDoListFuckThis.Models;
 using ToDoListFuckThis.Models.Dto.ToDoListDto;
-using UserManager.Models.Dto;
 
 namespace ToDoListFuckThis.Mapping
 {
@@ -10,13 +9,14 @@ namespace ToDoListFuckThis.Mapping
     {
         public TodolistMapping()
         {
-            CreateMap<TodolistRequestDto, Todolists>()
+            CreateMap<TodolistCreateRequestDto, Todolists>()
                 // bỏ cái user đi được rồi
                 .ForMember(x => x.User, opt => opt.Ignore())
                 .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.TodoSectionId , opt => opt.Ignore())
                 .ReverseMap();
             CreateMap<Todolists, TodolistResponseDto>().ReverseMap();
-            
+            CreateMap<TodolistUpdateRequestDto,Todolists>().ReverseMap();
         }
     }
 }

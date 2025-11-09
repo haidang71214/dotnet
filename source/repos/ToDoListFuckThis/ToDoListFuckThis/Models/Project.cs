@@ -15,6 +15,7 @@ namespace ToDoListFuckThis.Models
 
         public string? Note { get; set; } // lưu ý khi làm project
         public List<Users> Users { get; set; } = new List<Users>();
+        // mỗi project thì sẽ có nhiều users, và có nhiều cái todosection
         public List<TodoSection> Todosection { get; set; } = new List<TodoSection>();
 
         public DateTime StartTime { get; set; }

@@ -101,6 +101,374 @@
         }
       }
     },
+    "/api/todo/getalltodolist": {
+      "get": {
+        "tags": [
+          "TodoList"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todo": {
+      "post": {
+        "tags": [
+          "TodoList"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistCreateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistCreateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistCreateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "TodoList"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todo/{id}": {
+      "patch": {
+        "tags": [
+          "TodoList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistUpdateRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistUpdateRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistUpdateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "TodoList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todo/section/{id}/users/{userId}": {
+      "post": {
+        "tags": [
+          "TodoList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoListSectionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoListSectionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoListSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "TodoList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoListSection"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoListSection"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoListSection"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todo/section/{id}": {
+      "get": {
+        "tags": [
+          "TodoList"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -331,6 +699,34 @@
         },
         "additionalProperties": false
       },
+      "CreateTodoListSectionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEnum"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityEnums"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeEnd": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "HttpStatusCode": {
         "enum": [
           "Continue",
@@ -424,6 +820,59 @@
         },
         "additionalProperties": false
       },
+      "PriorityEnums": {
+        "enum": [
+          "URGENT",
+          "HIGHT",
+          "NOMAL",
+          "LOW",
+          "CLEAR"
+        ],
+        "type": "string"
+      },
+      "Projects": {
+        "required": [
+          "projectName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Users"
+            },
+            "nullable": true
+          },
+          "todosection": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TodoSection"
+            },
+            "nullable": true
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterRequestDto": {
         "type": "object",
         "properties": {
@@ -445,6 +894,214 @@
           },
           "email": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RoleEnums": {
+        "enum": [
+          "ADMIN",
+          "CLIENT",
+          "PRJECT_MANAGER"
+        ],
+        "type": "string"
+      },
+      "TaskStatusEnum": {
+        "enum": [
+          "PROGRESS",
+          "IN_PROGRESS",
+          "COMPLETE"
+        ],
+        "type": "string"
+      },
+      "TodoSection": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "todolists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Todolists"
+            },
+            "nullable": true
+          },
+          "dateStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateEnd": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TodolistCreateRequestDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEnum"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityEnums"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeEnd": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TodolistUpdateRequestDto": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEnum"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityEnums"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeStart": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "timeEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Todolists": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEnum"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityEnums"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "todoSectionId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "timeStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Users"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TodolistsApiListResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "errorMessages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Todolists"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateTodoListSection": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatusEnum"
+          },
+          "priority": {
+            "$ref": "#/components/schemas/PriorityEnums"
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeStart": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "timeEnd": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
@@ -528,6 +1185,49 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Users": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imagesUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/RoleEnums"
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Projects"
             },
             "nullable": true
           }

@@ -68,6 +68,227 @@
     ]
   },
   {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "CreateTodo",
+    "RelativePath": "api/todo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "todolistRequestDto",
+        "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.TodolistCreateRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "GetTodoMySelf",
+    "RelativePath": "api/todo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiListResponse\u00601[[ToDoListFuckThis.Models.Todolists, ToDoListFuckThis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "UpdateTodo",
+    "RelativePath": "api/todo/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "todolistUpdateRequestDto",
+        "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.TodolistUpdateRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "GetDetailTodoList",
+    "RelativePath": "api/todo/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "GetAllTodoList",
+    "RelativePath": "api/todo/getalltodolist",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiListResponse\u00601[[ToDoListFuckThis.Models.Todolists, ToDoListFuckThis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "GetTodoListBySection",
+    "RelativePath": "api/todo/section/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiListResponse\u00601[[ToDoListFuckThis.Models.Todolists, ToDoListFuckThis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "CreateTodoListByProject",
+    "RelativePath": "api/todo/section/{id}/users/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "createTodoListSectionDto",
+        "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.CreateTodoListSectionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "UpdateTodoListByProject",
+    "RelativePath": "api/todo/section/{id}/users/{userId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "createTodoListSectionDto",
+        "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.UpdateTodoListSection",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "ToDoListFuckThis.Controllers.UserController",
     "Method": "GetAllUser",
     "RelativePath": "api/users",

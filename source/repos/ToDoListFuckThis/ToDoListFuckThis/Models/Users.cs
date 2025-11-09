@@ -15,7 +15,8 @@ namespace ToDoListFuckThis.Models
         public int Age { get; set; }
         public string? ImagesUrl { get; set; }
 
-        public string? Email { get; set; }
+        [Required]
+        public string Email { get; set; }
         public RoleEnums Role { get; set; } = RoleEnums.CLIENT; //mặc định là client
         public ICollection<Projects> Projects { get; set; } = new List<Projects>();
     }
