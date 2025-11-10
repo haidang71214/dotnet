@@ -12,6 +12,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginRequestDto"
@@ -60,6 +65,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequestDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RegisterRequestDto"
@@ -137,6 +147,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistCreateRequestDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TodolistCreateRequestDto"
@@ -222,6 +237,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodolistUpdateRequestDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TodolistUpdateRequestDto"
@@ -325,6 +345,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoListSectionDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateTodoListSectionDto"
@@ -389,6 +414,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoListSection"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateTodoListSection"
@@ -528,6 +558,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateUserDto"
@@ -972,15 +1007,8 @@
         "additionalProperties": false
       },
       "TodolistUpdateRequestDto": {
-        "required": [
-          "id"
-        ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
             "type": "string",
             "nullable": true

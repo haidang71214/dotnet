@@ -18,7 +18,7 @@ namespace ToDoListFuckThis.Models
         // độ ưu tiên của task,mặc định là không ưu tiên
         public PriorityEnums Priority { get; set; } = PriorityEnums.CLEAR; // mặc định độ quan trong của todo là clear
         // comment
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         // deadline cho từng todo
         public Guid? TodoSectionId { get; set; }
         public DateTime timeStart { get; set; }

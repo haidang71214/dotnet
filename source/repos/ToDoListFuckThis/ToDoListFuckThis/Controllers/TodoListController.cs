@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using ToDoListFuckThis.Models;
 using ToDoListFuckThis.Models.CustomResponse;
 using ToDoListFuckThis.Models.Dto.ToDoListDto;
@@ -57,17 +58,32 @@ namespace ToDoListFuckThis.Controllers
         }
         [Authorize]
         [HttpPatch("{id}")]
-        public async Task<ActionResult<ApiResponse>> UpdateTodo(string id, TodolistUpdateRequestDto todolistUpdateRequestDto) {
+        public async Task<ActionResult<ApiResponse>> UpdateTodo(string id, [FromBody] TodolistUpdateRequestDto dto)
+        {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var userGuiId = Guid.Parse(userId);
             var todoId = Guid.Parse(id);
-            var newTodo = _mapper.Map<Todolists>(todolistUpdateRequestDto);
-            newTodo.Id = todoId;
-            newTodo.User = await _user.GetAsync(user => user.Id == userGuiId);
-            // lấy 2 cái đó nhét vô dưới là có đủ trường như java =))
-            await _db.UpdateAsync(newTodo);
-            return ApiResponse.Success(newTodo);
+
+            // Lấy entity hiện tại từ DB
+            var todo = await _db.GetAsync(t => t.Id == todoId);
+            if (todo == null)
+                return ApiResponse.Fail("Todo not found or unauthorized");
+
+            // Gán từng field nếu DTO có giá trị
+            if (dto.Name != null) todo.Name = dto.Name;
+            if (dto.Comment != null) todo.Comment = dto.Comment;
+            if (dto.Priority != null) todo.Priority = dto.Priority.Value;
+            if (dto.TaskStatus != null) todo.TaskStatus = dto.TaskStatus.Value;
+
+            // User không update từ PATCH, giữ nguyên
+            todo.User = await _user.GetAsync(u => u.Id == userGuiId);
+
+            // Save entity
+            await _db.UpdateAsync(todo);
+
+            return ApiResponse.Success(todo);
         }
+
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse>> GetDetailTodoList(string id){
@@ -92,20 +108,7 @@ namespace ToDoListFuckThis.Controllers
             var newTodo = await _db.CreateAsync(todoEntity);   
             return ApiResponse.Success(newTodo);
         }
-        [Authorize]
-        [HttpPatch("section/{id}/users/{userId}")] // có thể là lấy cái userId từ cái api luôn
-        public async Task<ActionResult<ApiResponse>> UpdateTodoListByProject(string id, string userId, [FromBody] UpdateTodoListSection createTodoListSectionDto)
-        {
-            var sectionId = Guid.Parse(id); // lấy cái sectionid đó, 
-            var userIda = Guid.Parse(userId); // lấy cái userId
-            var todoEntity = _mapper.Map<Todolists>(createTodoListSectionDto);
-            todoEntity.User = await _user.GetAsync(u => u.Id == userIda);
-            // lấy cái id của section id
-            todoEntity.TodoSectionId = sectionId;
-
-             await _db.UpdateAsync(todoEntity);
-            return ApiResponse.Success(todoEntity);
-        }
+        // sẽ có 1 cái cho thằng admin của project đó update nữa
 
         [Authorize]
         [HttpGet("section/{id}")] // có thể là lấy cái userId từ cái api luôn
@@ -116,6 +119,13 @@ namespace ToDoListFuckThis.Controllers
             var listtodo = await _db.GetAllAsync(u => u.TodoSectionId == sectionId);
    
             return ApiListResponse<Todolists>.Success(listtodo);
+        }
+        [Authorize]
+        [HttpDelete("{todoId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteTodo(Guid todoId) {
+            var todo = await _db.GetAsync(todo => todo.Id == todoId);
+            await _db.DeleteAsync(todo);
+            return ApiResponse.Success(todo);
         }
     }
 }

@@ -42,7 +42,7 @@ namespace UserManager
             });
 
             // 5. JSON Enum Converter
-            builder.Services.AddControllers()
+            builder.Services.AddControllers().AddNewtonsoftJson()
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

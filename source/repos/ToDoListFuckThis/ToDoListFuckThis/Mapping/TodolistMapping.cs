@@ -16,7 +16,7 @@ namespace ToDoListFuckThis.Mapping
                 .ForMember(x => x.TodoSectionId , opt => opt.Ignore())
                 .ReverseMap();
             CreateMap<Todolists, TodolistResponseDto>().ReverseMap();
-            CreateMap<TodolistUpdateRequestDto,Todolists>().ReverseMap();
+            CreateMap<TodolistUpdateRequestDto,Todolists>().ReverseMap().ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null)); // viết như này nó sẽ chỉ update những cái mà khác null
         }
     }
 }

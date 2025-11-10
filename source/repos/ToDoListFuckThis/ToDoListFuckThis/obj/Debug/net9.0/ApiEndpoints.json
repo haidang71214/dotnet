@@ -127,7 +127,7 @@
         "IsRequired": true
       },
       {
-        "Name": "todolistUpdateRequestDto",
+        "Name": "dto",
         "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.TodolistUpdateRequestDto",
         "IsRequired": true
       }
