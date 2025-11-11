@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ToDoListFuckThis.Data;
@@ -11,9 +12,11 @@ using ToDoListFuckThis.Data;
 namespace ToDoListFuckThis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251111071425_fixrelation")]
+    partial class fixrelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,12 +100,12 @@ namespace ToDoListFuckThis.Migrations
                     b.Property<DateTime>("DateStart")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("ProjectId")
+                    b.Property<Guid?>("ProjectsId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectsId");
 
                     b.ToTable("todoSections");
                 });
@@ -129,7 +132,7 @@ namespace ToDoListFuckThis.Migrations
                     b.Property<Guid?>("TodoSectionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("UsersId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("timeEnd")
@@ -142,7 +145,7 @@ namespace ToDoListFuckThis.Migrations
 
                     b.HasIndex("TodoSectionId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("todolists");
                 });
@@ -213,13 +216,9 @@ namespace ToDoListFuckThis.Migrations
 
             modelBuilder.Entity("ToDoListFuckThis.Models.TodoSection", b =>
                 {
-                    b.HasOne("ToDoListFuckThis.Models.Projects", "Projects")
+                    b.HasOne("ToDoListFuckThis.Models.Projects", null)
                         .WithMany("Todosection")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Projects");
+                        .HasForeignKey("ProjectsId");
                 });
 
             modelBuilder.Entity("ToDoListFuckThis.Models.Todolists", b =>
@@ -230,7 +229,9 @@ namespace ToDoListFuckThis.Migrations
 
                     b.HasOne("ToDoListFuckThis.Models.Users", "User")
                         .WithMany()
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TodoSection");
 

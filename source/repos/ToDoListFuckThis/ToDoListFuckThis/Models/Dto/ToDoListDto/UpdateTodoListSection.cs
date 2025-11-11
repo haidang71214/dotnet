@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿
 using ToDoListFuckThis.Enums;
 
 namespace ToDoListFuckThis.Models.Dto.ToDoListDto

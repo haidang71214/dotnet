@@ -11,8 +11,13 @@ namespace ToDoListFuckThis.Models
 
         public Guid Id { get; set; } = Guid.NewGuid();
         // tên, trạng thái đã làm rồi làm chưa đang làm chưa làm; comment;
-        public Users? user { get; set; } //many to one
-        public Projects? projects { get; set;  } // many to one
+        [ForeignKey("Users")]
+        public Guid UsersId { get; set; }
+        public Users Users { get; set; } //many to one
+
+        [ForeignKey("Projects")]
+        public Guid ProjectsId { get; set; }
+        public Projects Projects { get; set;  } // many to one
 
 
         public RoleProject roleProject { get; set; } = RoleProject.EMPLOYEE; // mặc định nếu không tạo là nhân viên

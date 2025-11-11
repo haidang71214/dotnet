@@ -33,12 +33,14 @@ namespace UserManager
             builder.Services.AddScoped<IAuthentication, AuthenticationRepository>();
             builder.Services.AddScoped<ISectionRepository, TodoSectionRepository>();
             builder.Services.AddScoped<ITodoRepository,TodoListRepository>();
+            builder.Services.AddScoped<IProjectRepository,ProjectRepository>();
             // 4. AutoMapper
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<UserMapping>();
                 cfg.AddProfile<RegisterMapping>();
                 cfg.AddProfile <TodolistMapping>();
+                cfg.AddProfile<SectionMapping>();
             });
 
             // 5. JSON Enum Converter

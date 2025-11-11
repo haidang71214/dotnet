@@ -143,7 +143,6 @@ C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.
 C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.0\BouncyCastle.Crypto.dll
 C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\HAI DANG\source\repos\ToDoListFuckThis\ToDoListFuckThis\bin\Debug\net9.0\Newtonsoft.Json.dll

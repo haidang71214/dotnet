@@ -68,6 +68,52 @@
     ]
   },
   {
+    "ContainingType": "ToDoListFuckThis.Controllers.ProjectController",
+    "Method": "getAllProject",
+    "RelativePath": "api/project",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiListResponse\u00601[[ToDoListFuckThis.Models.Projects, ToDoListFuckThis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.ProjectController",
+    "Method": "getAllSectionInProject",
+    "RelativePath": "api/project/project/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
     "Method": "CreateTodo",
     "RelativePath": "api/todo",
@@ -172,6 +218,32 @@
   },
   {
     "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
+    "Method": "DeleteTodo",
+    "RelativePath": "api/todo/{todoId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "todoId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
     "Method": "GetAllTodoList",
     "RelativePath": "api/todo/getalltodolist",
     "HttpMethod": "GET",
@@ -237,42 +309,6 @@
       {
         "Name": "createTodoListSectionDto",
         "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.CreateTodoListSectionDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "ToDoListFuckThis.Models.CustomResponse.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "ToDoListFuckThis.Controllers.TodoListController",
-    "Method": "UpdateTodoListByProject",
-    "RelativePath": "api/todo/section/{id}/users/{userId}",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "userId",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "createTodoListSectionDto",
-        "Type": "ToDoListFuckThis.Models.Dto.ToDoListDto.UpdateTodoListSection",
         "IsRequired": true
       }
     ],

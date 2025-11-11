@@ -111,6 +111,75 @@
         }
       }
     },
+    "/api/project": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectsApiListResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectsApiListResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectsApiListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/project/project/{id}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/todo/getalltodolist": {
       "get": {
         "tags": [
@@ -389,75 +458,6 @@
             }
           }
         }
-      },
-      "patch": {
-        "tags": [
-          "TodoList"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListSection"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListSection"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListSection"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListSection"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/todo/section/{id}": {
@@ -492,6 +492,46 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TodolistsApiListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todo/{todoId}": {
+      "delete": {
+        "tags": [
+          "TodoList"
+        ],
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
                 }
               }
             }
@@ -908,6 +948,32 @@
         },
         "additionalProperties": false
       },
+      "ProjectsApiListResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "errorMessages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Projects"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterRequestDto": {
         "type": "object",
         "properties": {
@@ -1065,6 +1131,9 @@
             "format": "uuid",
             "nullable": true
           },
+          "todoSection": {
+            "$ref": "#/components/schemas/TodoSection"
+          },
           "timeStart": {
             "type": "string",
             "format": "date-time"
@@ -1072,6 +1141,11 @@
           "timeEnd": {
             "type": "string",
             "format": "date-time"
+          },
+          "usersId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
           },
           "user": {
             "$ref": "#/components/schemas/Users"
@@ -1100,36 +1174,6 @@
             "items": {
               "$ref": "#/components/schemas/Todolists"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UpdateTodoListSection": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "taskStatus": {
-            "$ref": "#/components/schemas/TaskStatusEnum"
-          },
-          "priority": {
-            "$ref": "#/components/schemas/PriorityEnums"
-          },
-          "comment": {
-            "type": "string",
-            "nullable": true
-          },
-          "timeStart": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "timeEnd": {
-            "type": "string",
-            "format": "date-time",
             "nullable": true
           }
         },

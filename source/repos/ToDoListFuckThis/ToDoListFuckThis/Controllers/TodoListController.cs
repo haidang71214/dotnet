@@ -41,10 +41,10 @@ namespace ToDoListFuckThis.Controllers
             // tự nhét cái user id vào todo
             var TodoChange = _mapper.Map<Todolists>(todolistRequestDto);
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+          
             var fuckguid = Guid.Parse(userId);
-            TodoChange.User = await _user.GetAsync(u => u.Id == fuckguid);
+            TodoChange.UsersId = fuckguid;
             var Todo = await _db.CreateAsync(TodoChange);
-            Todo.User = null;
             return ApiResponse.Success(Todo);
         }
         // cái người chủ project tạo
@@ -90,7 +90,7 @@ namespace ToDoListFuckThis.Controllers
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
              var userGuiId = Guid.Parse(userId);
             var todoId = Guid.Parse(id);
-            var todoList = await _db.GetAsync(todo => todo.Id == todoId);
+            var todoList = await _db.GetAsync(todo => todo.Id == todoId,includeProperties:"User");
             return ApiResponse.Success(todoList);
     }
         // trước hết là những cái todo list của mình, mình quản lí như vậy đã
@@ -101,7 +101,7 @@ namespace ToDoListFuckThis.Controllers
             var sectionId = Guid.Parse(id); // lấy cái sectionid đó, 
             var userIda = Guid.Parse(userId); // lấy cái userId
             var todoEntity = _mapper.Map<Todolists>(createTodoListSectionDto);
-            todoEntity.User = await _user.GetAsync(u=>u.Id == userIda);
+            todoEntity.UsersId = userIda;
             // lấy cái id của section id
             todoEntity.TodoSectionId = sectionId;
 

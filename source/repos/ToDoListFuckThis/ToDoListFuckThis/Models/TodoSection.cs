@@ -11,7 +11,10 @@ namespace ToDoListFuckThis.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
         // để phần section nắm todolist, phân ra từng deadline
-        public List<Todolists> Todolists { get; set; } = new List<Todolists>();
+        [ForeignKey(nameof(Projects))]
+        public Guid ProjectId { get; set; }
+        public Projects Projects { get; set; }
+        public ICollection<Todolists> Todolists { get; set; } = new List<Todolists>();
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
 
