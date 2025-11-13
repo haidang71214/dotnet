@@ -61,7 +61,63 @@ namespace ToDoListFuckThis.Controllers
                 return ApiResponse.Fail("Failed to create section");
             return ApiResponse.Success(createSection);
         }
-        
+        // lấy tất cả section của project
+        [HttpGet("{projectId}")]
+        public async Task<ActionResult<ApiListResponse<TodoSection>>> getSectionByProject(Guid projectId) { 
+            var GetFuckProject =  await _section.GetAsync(project => project.Id == projectId);
+            if (GetFuckProject == null) {
+                ApiResponse.Fail("Project not exits");
+            }
+            var section = await _section.GetAllAsync(t => t.ProjectId == projectId);
+            return ApiListResponse<TodoSection>.Success(section);
+        }
+        // update section by section Id
+        [HttpPatch("{sectionId}")]
+        public async Task<ActionResult<ApiResponse>> UpdateSectionById(Guid sectionId,UpdateSectionDto update) {
+            // lấy chính cái section id đó ra update
+            // 
+            var checkSection = await _section.GetAsync(section => section.Id == sectionId);
+            if (checkSection == null) {
+                return ApiResponse.Fail("Section not exits");
+            }
+            if (update.Todolists != null) {
+                // kiếm cái todo rồi add vào
+               var vailidTodo = await _todo.GetAllAsync(t => update.Todolists.Contains(t.Id)); // lấy ids của todo 
+                var validTodoIdSet = vailidTodo.Select(t => t.Id).ToHashSet();
+                if (validTodoIdSet.Any())
+                    return ApiResponse.Fail("Invailid Ids");
+
+                checkSection.Todolists = vailidTodo;
+            }
+            if (update.DateEnd != null) {
+                checkSection.DateEnd = update.DateEnd;
+            }
+            if (update.DateStart != null)
+            {   
+                checkSection.DateStart = update.DateStart;
+            }
+           checkSection.ProjectId = checkSection.ProjectId;
+            checkSection.Id = checkSection.Id;
+            await _section.UpdateAsync(checkSection);
+            return ApiResponse.Success(checkSection);           
+        }
+        // xóa section (xóa cả todolist lẫn trong project)
+        [HttpDelete("{sectionId}")]
+        public async Task<ActionResult<ApiResponse>> DeleteSectionById(Guid sectionId) { 
+
+            var getSection = await _section.GetAsync(t => t.Id == sectionId);
+            if (getSection == null) {
+                return ApiResponse.Fail("a"); 
+          }
+
+            var getListTodoList = await _todo.GetAllAsync(t=> t.TodoSectionId == sectionId);
+            foreach (var todo in getListTodoList) {
+                await _todo.DeleteAsync(todo);
+            }
+            await _section.DeleteAsync(getSection);
+
+            return ApiResponse.Success("delete Success");
+        }
         
     }
 }

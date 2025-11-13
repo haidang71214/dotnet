@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDoListFuckThis.Models;
 using ToDoListFuckThis.Models.CustomResponse;
+using ToDoListFuckThis.Models.Dto.ProjectDto;
 using ToDoListFuckThis.Repository.IRepository;
 using UserManager.repository.IRepository;
 
@@ -38,5 +39,33 @@ namespace ToDoListFuckThis.Controllers
         }
 
         // tạo cái section rồi add vào đây nữa
+        // tạo project mới
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse>> createProject([FromBody] CreateProjectDto createProject) {
+
+            var newProject = _mapper.Map<Projects>(createProject);
+            if (createProject.UsersIds?.Any() == true) {
+                var getAllUser = await _user.GetAllAsync(user => createProject.UsersIds.Contains(user.Id)); // hiểu thì là lọc obj
+                var userHasset = getAllUser.Select(t=> t.Id).ToHashSet(); // lọc id
+            // kiểm tra id sai
+                var invailidId = createProject.UsersIds.Except(userHasset).ToList();
+                if (invailidId.Any()) {
+                    return ApiResponse.Fail("Invailid Ids");
+                }
+
+                newProject.Users = getAllUser;
+            }
+            return ApiResponse.Success(newProject);
+        }
+        // lấy toàn bộ project của 1 user
+        [Authorize]
+        [HttpGet("project/user")]
+        public async Task<ActionResult<ApiResponse>> getProjectByUser() {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; 
+
+            var GuidUserId = Guid.Parse(userId);
+            var user = await _user.GetAsync(user => user.Id == GuidUserId, includeProperties: "Projects");
+            return ApiResponse.Success(user);
+        }
     }
 }

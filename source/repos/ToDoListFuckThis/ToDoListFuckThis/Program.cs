@@ -41,6 +41,7 @@ namespace UserManager
                 cfg.AddProfile<RegisterMapping>();
                 cfg.AddProfile <TodolistMapping>();
                 cfg.AddProfile<SectionMapping>();
+                cfg.AddProfile<ProjectMapping>();
             });
 
             // 5. JSON Enum Converter
