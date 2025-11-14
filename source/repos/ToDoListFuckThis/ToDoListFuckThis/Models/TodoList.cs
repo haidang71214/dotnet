@@ -20,13 +20,13 @@ namespace ToDoListFuckThis.Models
         // comment
         public string? Comment { get; set; }
         // deadline cho từng todo
-        [ForeignKey("TodoSection")]
+        [ForeignKey(nameof(TodoSectionId))]
         public Guid? TodoSectionId { get; set; }
         public TodoSection TodoSection { get; set; }
         public DateTime timeStart { get; set; }
         public DateTime timeEnd { get; set; }
 
-
+        [ForeignKey(nameof(UsersId))]
         public Guid? UsersId { get; set; }
         public Users User { get; set; } // manny to one for user, 
 

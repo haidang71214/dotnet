@@ -11,7 +11,7 @@ namespace ToDoListFuckThis.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
         // để phần section nắm todolist, phân ra từng deadline
-        [ForeignKey(nameof(Projects))]
+        [ForeignKey(nameof(ProjectId))]
         public Guid ProjectId { get; set; }
         public Projects Projects { get; set; }
         public ICollection<Todolists> Todolists { get; set; } = new List<Todolists>();

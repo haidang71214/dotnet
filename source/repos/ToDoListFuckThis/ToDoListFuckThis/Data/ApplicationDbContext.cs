@@ -13,7 +13,5 @@ namespace ToDoListFuckThis.Data
         public DbSet<Projects> projects { get; set; }
         public DbSet<Todolists> todolists { get; set; }
         public DbSet<TodoSection> todoSections { get; set; }
-
-        public DbSet<ProjectRoles> projectRoles { get; set; }
     }
 }

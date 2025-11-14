@@ -18,6 +18,8 @@ namespace ToDoListFuckThis.Models
         [Required]
         public string Email { get; set; }
         public RoleEnums Role { get; set; } = RoleEnums.CLIENT; //mặc định là client
+        [InverseProperty("Owner")]
+        public ICollection<Projects> OwnedProjects { get; set; } = new List<Projects>();
         public ICollection<Projects> Projects { get; set; } = new List<Projects>();
     }
 }
