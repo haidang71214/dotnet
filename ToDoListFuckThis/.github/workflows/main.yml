@@ -24,36 +24,31 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            # Tạo thư mục nếu chưa có
-            mkdir -p /root/todolist
-            
-            # Vào đúng thư mục
-            cd /root/todolist
-            
-            # Nếu lần đầu thì clone, còn không thì pull
+            mkdir -p /root/todolist/dotnet
+            cd /root/todolist/dotnet
+
+            # Clone hoặc pull repo
             if [ ! -d ".git" ]; then
-              echo "First time deploy - cloning repo..."
               git clone https://github.com/haidang71214/dotnet.git .
             else
-              echo "Updating code..."
               git fetch origin
               git reset --hard origin/main
             fi
-            
-            # Vào đúng thư mục project (chứa .csproj và Dockerfile)
-            cd ToDoListFuckThis
-            
+
+            # Đi đến đúng thư mục chứa project BE
+            cd source/repos/ToDoListFuckThis/ToDoListFuckThis
+
             # Publish + Build Docker
-            dotnet publish -c Release -o publish --no-restore
+            dotnet publish -c Release -o publish
             docker build -t todolistbe .
-            
-            # Restart container
+
             docker stop todolistbe-container || true
             docker rm todolistbe-container || true
+
             docker run -d \
               --name todolistbe-container \
               -p 5000:8080 \
               --restart unless-stopped \
               todolistbe
-            
+
             docker ps | grep todolistbe
