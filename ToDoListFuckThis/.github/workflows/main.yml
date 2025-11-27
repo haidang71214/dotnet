@@ -7,15 +7,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'   # đổi thành 6.0.x hoặc 7.0.x nếu mày dùng cũ hơn
+          dotnet-version: '8.0.x'
 
       - name: Deploy qua SSH
         uses: appleboy/ssh-action@master
@@ -25,18 +24,36 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /root/todolist
-            git fetch origin
-            git checkout main
-            git pull origin main
+            # Tạo thư mục nếu chưa có
+            mkdir -p /root/todolist
             
-            # Build .NET + Docker
-            dotnet publish -c Release -o publish
-            docker build -t todolist-api .
+            # Vào đúng thư mục
+            cd /root/todolist
+            
+            # Nếu lần đầu thì clone, còn không thì pull
+            if [ ! -d ".git" ]; then
+              echo "First time deploy - cloning repo..."
+              git clone https://github.com/haidang71214/dotnet.git .
+            else
+              echo "Updating code..."
+              git fetch origin
+              git reset --hard origin/main
+            fi
+            
+            # Vào đúng thư mục project (chứa .csproj và Dockerfile)
+            cd ToDoListFuckThis
+            
+            # Publish + Build Docker
+            dotnet publish -c Release -o publish --no-restore
+            docker build -t todolistbe .
             
             # Restart container
-            docker stop todolist-api-container || true
-            docker rm todolist-api-container || true
-            docker run -d --name todolist-api-container -p 5000:8080 todolist-api
+            docker stop todolistbe-container || true
+            docker rm todolistbe-container || true
+            docker run -d \
+              --name todolistbe-container \
+              -p 5000:8080 \
+              --restart unless-stopped \
+              todolistbe
             
-            echo "Deploy .NET thành công!"
+            docker ps | grep todolistbe
