@@ -88,7 +88,10 @@ namespace UserManager
                 options.AddPolicy("AllowFrontend", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:3000") // front-end của mày
+                        .WithOrigins("https://www.todolistaa.click", 
+                "http://localhost:3000",          
+                "http://localhost:5173",           
+                "http://127.0.0.1:3000") 
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials(); // nếu dùng cookie/auth
