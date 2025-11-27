@@ -1,0 +1,42 @@
+﻿name: Deploy .NET API
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'   # đổi thành 6.0.x hoặc 7.0.x nếu mày dùng cũ hơn
+
+      - name: Deploy qua SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /root/todolist
+            git fetch origin
+            git checkout main
+            git pull origin main
+            
+            # Build .NET + Docker
+            dotnet publish -c Release -o publish
+            docker build -t todolist-api .
+            
+            # Restart container
+            docker stop todolist-api-container || true
+            docker rm todolist-api-container || true
+            docker run -d --name todolist-api-container -p 5000:8080 todolist-api
+            
+            echo "Deploy .NET thành công!"
