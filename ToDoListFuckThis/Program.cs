@@ -91,7 +91,7 @@ namespace UserManager
                         .WithOrigins("http://103.57.223.234:4000", 
                 "http://localhost:3000",          
                 "http://localhost:5173",           
-                "http://127.0.0.1:3000") 
+                "http://127.0.0.1:3000","http://localhost:4200") 
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials(); // nếu dùng cookie/auth
